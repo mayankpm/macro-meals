@@ -36,6 +36,48 @@ function generateUserSummary(event) {
 
   var day1Calories = 0;
 
+  var finalMessage = 'I want you to be an AI personal trainer. So here’s the information: My age is' + age + 'My gender is' + gender +
+  'My height is' + height +
+  'My current weight is' + weight +
+  'There are 3 goals: Maintain, Weight Loss, Weight Gain. The one I have chosen is' + userGoal + 'My activity level out of 5 is' +  activitylevel +
+
+  'Suggest a weekly planner for me'
+
+
+
+//   const blob = new Blob([finalMessageJson], { type: "application/json" });
+
+
+// const downloadLink = document.createElement("a");
+// downloadLink.href = URL.createObjectURL(blob);
+// downloadLink.download = "final_message.json";
+// downloadLink.click();
+
+fetch("http://localhost:4000/", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ input: finalMessage }),
+})
+  .then((response) => response.json())
+  .then((data) => {
+    // Process the response from ChatGPT
+    const chatGptResponse = data.result.text;
+    // Do something with the chatGptResponse
+    console.log("ChatGPT Response:", chatGptResponse);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+
+
+
+
+
+
+
+
   // alert modal event listener
   $("#alert-ok-btn").on("click", function () {
     $("#alert-modal-container").addClass("form-none");
